@@ -1,0 +1,21 @@
+{
+    "name": "matejch/webareal-api-handler",
+    "description": "Api for getting and sending data to webreal type eshops",
+    "type": "library",
+    "keywords": ["webareal"," api"," request","eshop"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matej Ch",
+            "email": "matejCH.work@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "matejch\\webarealApiHandler\\": ""
+        }
+    }
+}
