@@ -1,6 +1,6 @@
 {
     "name": "matejch/webareal-api-handler",
-    "description": "Api for getting and sending data to webreal type eshops",
+    "description": "Api for getting and sending data to webareal type eshops",
     "type": "library",
     "keywords": ["webareal"," api"," request","eshop"],
     "license": "MIT",
@@ -11,11 +11,20 @@
         }
     ],
     "require": {
-        "yiisoft/yii2": "~2.0.0"
+        "php": ">=7.2.0",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "psr-4": {
-            "matejch\\webarealApiHandler\\": ""
+            "matejch\\webarealApiHandler\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "matejch\\webarealApiHandler\\tests\\": "tests/"
         }
     }
 }
