@@ -2,6 +2,8 @@ Webareal api handler
 ====================
 Api for getting and sending data to webareal type eshops
 
+Full documentation [here](https://webareal.docs.apiary.io/#)
+
 Installation
 ------------
 
@@ -25,6 +27,11 @@ to the require section of your `composer.json` file.
 Usage
 -----
 
+
+You need _username_, _password_ and _token (API key)_ from your webareal eshop
+API key is located in tab **API**
+
+Token bearer for requests is retrieved in login request
 ```php
 
 ```
