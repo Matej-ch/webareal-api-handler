@@ -41,7 +41,18 @@ class WebarealHandler
      *
      * @var string
      */
-    private $bearer;
+    private $bearerToken;
+
+    /**
+     * If you want to test api on development server without certificate, set enableDev to true
+     * @var bool
+     */
+    private $enableDev = false;
+
+    /**
+     * @var string
+     */
+    public $responseCode;
 
     public function __construct($username, $password,$apiKey)
     {
@@ -58,11 +69,19 @@ class WebarealHandler
         $this->baseUrl = rtrim($baseUrl,'/');
     }
 
+    /**
+     * @return string
+     */
+    public function getBaseUrl(): string
+    {
+        return $this->baseUrl;
+    }
 
     /**
      * Login into api
      *
      * @param string $endPoint
+     * @throws \Exception
      */
     public function login(string $endPoint = 'login')
     {
@@ -80,15 +99,24 @@ class WebarealHandler
             CURLOPT_HTTPHEADER => [
                 "X-Wa-api-token: $this->apiKey"
             ],
+
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0
         ]);
 
         $response = curl_exec($ch);
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         curl_close($ch);
 
-        var_dump($httpcode);
-        var_dump($response);
+        $this->responseCode = $httpCode;
+
+        if($httpCode !== 200) {
+            throw new \Exception("Response code is $httpCode");
+        }
+
+        $decodedResponse = json_decode($response,true);
+        $this->bearerToken = $decodedResponse['token'];
     }
 
     /**
@@ -106,7 +134,7 @@ class WebarealHandler
             CURLOPT_HEADER => false,
             CURLOPT_HTTPHEADER => [
                 "X-Wa-api-token: $this->apiKey",
-                "Authorization: Bearer $this->bearer"
+                "Authorization: Bearer $this->bearerToken"
             ]
         ]);
 
@@ -121,10 +149,18 @@ class WebarealHandler
     }
 
     /**
+     * @param bool $enableDev
+     */
+    public function setEnableDev(bool $enableDev): void
+    {
+        $this->enableDev = $enableDev;
+    }
+
+    /**
      * @return string
      */
-    public function getBaseUrl(): string
+    public function getBearerToken(): string
     {
-        return $this->baseUrl;
+        return $this->bearerToken;
     }
 }
