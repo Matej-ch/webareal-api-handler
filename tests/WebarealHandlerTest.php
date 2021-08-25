@@ -30,6 +30,12 @@ class WebarealHandlerTest extends TestCase
 
         $handler->setBaseUrl($this->url);
 
+        /** in case dev doesn't have certificate */
+        $handler->addCurlOptions([
+            CURLOPT_SSL_VERIFYHOST => 0,
+            CURLOPT_SSL_VERIFYPEER => 0
+        ]);
+
         $handler->login();
 
         $this->assertEquals('<token>',$handler->getBearerToken());
@@ -45,5 +51,19 @@ class WebarealHandlerTest extends TestCase
         $this->expectException(\Exception::class);
 
         $handler->login();
+    }
+
+    /**
+     * @test
+     */
+    public function it_sends_test_request_with_token_bearer_returned_fron_login_request()
+    {
+        $handler = new WebarealHandler('test','test12345','sadad3341');
+
+        $handler->setBaseUrl($this->url);
+
+        $handler->login();
+
+        $handler->test();
     }
 }

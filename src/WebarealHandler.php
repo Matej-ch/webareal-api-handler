@@ -44,15 +44,14 @@ class WebarealHandler
     private $bearerToken;
 
     /**
-     * If you want to test api on development server without certificate, set enableDev to true
-     * @var bool
+     * @var array
      */
-    private $enableDev = false;
+    private $curlOptions = [];
 
     /**
      * @var string
      */
-    public $responseCode;
+    public $lastResponseCode;
 
     public function __construct($username, $password,$apiKey)
     {
@@ -83,11 +82,11 @@ class WebarealHandler
      * @param string $endPoint
      * @throws \Exception
      */
-    public function login(string $endPoint = 'login')
+    public function login(string $endPoint = 'login'): void
     {
         $ch = curl_init();
 
-        curl_setopt_array($ch,[
+        $options = [
             CURLOPT_URL => $this->baseUrl.'/'.$endPoint,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
@@ -99,17 +98,16 @@ class WebarealHandler
             CURLOPT_HTTPHEADER => [
                 "X-Wa-api-token: $this->apiKey"
             ],
+        ];
 
-            CURLOPT_SSL_VERIFYHOST => 0,
-            CURLOPT_SSL_VERIFYPEER => 0
-        ]);
+        curl_setopt_array($ch,array_replace($options, $this->curlOptions));
 
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         curl_close($ch);
 
-        $this->responseCode = $httpCode;
+        $this->lastResponseCode = $httpCode;
 
         if($httpCode !== 200) {
             throw new \Exception("Response code is $httpCode");
@@ -123,37 +121,37 @@ class WebarealHandler
      * Test if user is logged in
      *
      * @param string $endPoint
+     * @return bool|string
+     * @throws \Exception
      */
-    public function test(string $endPoint = 'test'): void
+    public function test(string $endPoint = 'test')
     {
         $ch = curl_init();
 
-        curl_setopt_array($ch,[
+        $options = [
             CURLOPT_URL => $this->baseUrl.'/'.$endPoint,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_HTTPHEADER => [
                 "X-Wa-api-token: $this->apiKey",
                 "Authorization: Bearer $this->bearerToken"
-            ]
-        ]);
+            ],
+        ];
 
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_setopt_array($ch,array_replace($options,$this->curlOptions));
+
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         $response = curl_exec($ch);
         curl_close($ch);
 
-        var_dump($httpcode);
-        var_dump($response);
+        $this->lastResponseCode = $httpCode;
 
-    }
+        if($httpCode !== 200) {
+            throw new \Exception("Response code is $httpCode");
+        }
 
-    /**
-     * @param bool $enableDev
-     */
-    public function setEnableDev(bool $enableDev): void
-    {
-        $this->enableDev = $enableDev;
+        return $response;
     }
 
     /**
@@ -162,5 +160,16 @@ class WebarealHandler
     public function getBearerToken(): string
     {
         return $this->bearerToken;
+    }
+
+
+    public function addCurlOptions(array $options): void
+    {
+        $this->curlOptions = $options;
+    }
+
+    public function apiInfo($endPoint = 'api-info')
+    {
+        $ch = curl_init();
     }
 }
