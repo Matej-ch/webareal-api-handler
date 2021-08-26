@@ -13,47 +13,47 @@ class WebarealHandler
      *
      * @var string
      */
-    private $baseUrl = 'https://api.premium-wask.cz';
+    protected $baseUrl = 'https://api.premium-wask.cz';
 
     /**
      * Username is obtained from webareal
      *
      * @var string
      */
-    private $username;
+    protected $username;
 
     /**
      * Password is obtained on webareal
      *
      * @var string
      */
-    private $password;
+    protected $password;
 
     /**
      * Api key from webareal
      *
      * @var string
      */
-    private $apiKey;
+    protected $apiKey;
 
     /**
      * This value is returned after login in response
      *
      * @var string
      */
-    private $bearerToken;
+    protected $bearerToken;
 
     /**
      * @var array
      */
-    private $curlOptions = [];
+    protected $curlOptions = [];
 
     /**
      * @var string
      */
     public $lastResponseCode;
 
-    public function __construct($username, $password,$apiKey)
+    public function __construct($username, $password, $apiKey)
     {
         $this->username = $username;
         $this->password = $password;
@@ -65,7 +65,7 @@ class WebarealHandler
      */
     public function setBaseUrl(string $baseUrl): void
     {
-        $this->baseUrl = rtrim($baseUrl,'/');
+        $this->baseUrl = rtrim($baseUrl, '/');
     }
 
     /**
@@ -87,7 +87,7 @@ class WebarealHandler
         $ch = curl_init();
 
         $options = [
-            CURLOPT_URL => $this->baseUrl.'/'.$endPoint,
+            CURLOPT_URL => $this->baseUrl . '/' . $endPoint,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_POST => true,
@@ -100,7 +100,7 @@ class WebarealHandler
             ],
         ];
 
-        curl_setopt_array($ch,array_replace($options, $this->curlOptions));
+        curl_setopt_array($ch, array_replace($options, $this->curlOptions));
 
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -109,11 +109,11 @@ class WebarealHandler
 
         $this->lastResponseCode = $httpCode;
 
-        if($httpCode !== 200) {
+        if ($httpCode !== 200) {
             throw new \Exception("Error: Response code is $httpCode");
         }
 
-        $decodedResponse = json_decode($response,true);
+        $decodedResponse = json_decode($response, true);
         $this->bearerToken = $decodedResponse['token'];
     }
 
@@ -126,32 +126,19 @@ class WebarealHandler
      */
     public function test(string $endPoint = 'test')
     {
-        $ch = curl_init();
+        return $this->commonCurl($endPoint);
+    }
 
-        $options = [
-            CURLOPT_URL => $this->baseUrl.'/'.$endPoint,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HEADER => false,
-            CURLOPT_HTTPHEADER => [
-                "X-Wa-api-token: $this->apiKey",
-                "Authorization: Bearer $this->bearerToken"
-            ],
-        ];
-
-        curl_setopt_array($ch,array_replace($options,$this->curlOptions));
-
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-        curl_close($ch);
-
-        $this->lastResponseCode = $httpCode;
-
-        if($httpCode !== 200) {
-            throw new \Exception("Error: Response code is $httpCode");
-        }
-
-        return $response;
+    /**
+     * Retrieves info about api including limit for user, actual request by user, and whether is blocked
+     *
+     * @param string $endPoint
+     * @return bool|string
+     * @throws \Exception
+     */
+    public function apiInfo(string $endPoint = 'api-info')
+    {
+        return $this->commonCurl($endPoint);
     }
 
     /**
@@ -168,12 +155,17 @@ class WebarealHandler
         $this->curlOptions = $options;
     }
 
-    public function apiInfo($endPoint = 'api-info')
+    /**
+     * @param string $endPoint
+     * @return bool|string
+     * @throws \Exception
+     */
+    protected function commonCurl(string $endPoint)
     {
         $ch = curl_init();
 
         $options = [
-            CURLOPT_URL => $this->baseUrl.'/'.$endPoint,
+            CURLOPT_URL => $this->baseUrl . '/' . $endPoint,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_HTTPHEADER => [
@@ -182,7 +174,7 @@ class WebarealHandler
             ],
         ];
 
-        curl_setopt_array($ch,array_replace($options,$this->curlOptions));
+        curl_setopt_array($ch, array_replace($options, $this->curlOptions));
 
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -191,7 +183,7 @@ class WebarealHandler
 
         $this->lastResponseCode = $httpCode;
 
-        if($httpCode !== 200) {
+        if ($httpCode !== 200) {
             throw new \Exception("Error: Response code is $httpCode");
         }
 
