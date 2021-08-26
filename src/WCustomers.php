@@ -32,12 +32,14 @@ class WCustomers extends WebarealHandler
      */
     public function searchBy(array $searchBy = []): void
     {
-        if (!empty($searchBy)) {
-            if (isset($searchBy['findBy'])) {
-                $searchBy["findBy[{$searchBy['findBy']}]"] = $searchBy['searchedString'];
-                unset($searchBy['findBy'], $searchBy['searchedString']);
-            }
+        if (isset($searchBy['findBy'])) {
+            $searchBy["findBy[{$searchBy['findBy']}]"] = $searchBy['searchedString'];
+            unset($searchBy['findBy'], $searchBy['searchedString']);
+        } else {
+            unset($searchBy['searchedString']);
+        }
 
+        if (!empty($searchBy)) {
             $this->query = "?" . http_build_query($searchBy);
         }
     }

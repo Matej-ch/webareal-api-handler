@@ -29,20 +29,14 @@ class WCustomersTest extends TestCase
     }
 
     /**
+     * @dataProvider searchByCombinations
      * @test
      */
-    public function it_converts_searchBy_array_to_query_string()
+    public function it_converts_searchBy_array_to_query_string($output,$input)
     {
-        $this->customers->searchBy([
-            'limit' => 10,
-            'offset' => 10,
-            'sortBy' => 'id',
-            'sortDirection' => 'desc',
-            'findBy' => 'id',
-            'searchedString' => 'my search string'
-        ]);
+        $this->customers->searchBy($input);
 
-        $this->assertEquals("?limit=10&offset=10&sortBy=id&sortDirection=desc&findBy%5Bid%5D=my+search+string",$this->customers->query);
+        $this->assertEquals($output,$this->customers->query);
     }
 
     /**
@@ -75,5 +69,29 @@ class WCustomersTest extends TestCase
         $this->customers->asArray = true;
 
         $this->assertIsArray($this->customers->get());
+    }
+
+    public function searchByCombinations()
+    {
+        return [
+            ["?limit=10&offset=10&sortBy=id&sortDirection=desc&findBy%5Bid%5D=my+search+string",[
+                'limit' => 10,
+                'offset' => 10,
+                'sortBy' => 'id',
+                'sortDirection' => 'desc',
+                'findBy' => 'id',
+                'searchedString' => 'my search string'
+            ]],
+            ['',[]],
+            ['?offset=10&sortBy=id',[
+                'offset' => 10,
+                'sortBy' => 'id',
+            ]],
+            ['',['searchedString' => 'my search string']],
+            ['?findBy%5Bid%5D=my+search+string',[
+                'findBy' => 'id',
+                'searchedString' => 'my search string'
+            ]],
+        ];
     }
 }
