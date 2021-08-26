@@ -62,7 +62,7 @@ $handler->setBaseUrl($apiSubDomainUrl);
 ```
 
 ### Customers
-About customers endpoint [here](https://webareal.docs.apiary.io/#reference/0/working-with-registered-customers/get-all-registered-customers)
+Info about customers endpoint [here](https://webareal.docs.apiary.io/#reference/0/working-with-registered-customers/get-all-registered-customers)
 ```php
 /** Only one api endpoint exists, and that is for getting list of customers */
 $customers = new \matejch\webarealApiHandler\WCustomers($username,$password,$apiToken);
@@ -84,11 +84,16 @@ $customers->get();
 ```
 
 ### Products
+Info about product endpoints [here](https://webareal.docs.apiary.io/#reference/0/create-product/get-product-list)
+
 ```php
 
 ```
 
 ### Orders
+
+Info about order endpoints [here](https://webareal.docs.apiary.io/#reference/0/order-list)
+
 ```php
 
 ```
