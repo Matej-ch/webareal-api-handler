@@ -110,7 +110,7 @@ class WebarealHandler
         $this->lastResponseCode = $httpCode;
 
         if($httpCode !== 200) {
-            throw new \Exception("Response code is $httpCode");
+            throw new \Exception("Error: Response code is $httpCode");
         }
 
         $decodedResponse = json_decode($response,true);
@@ -140,15 +140,15 @@ class WebarealHandler
 
         curl_setopt_array($ch,array_replace($options,$this->curlOptions));
 
+        $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-        $response = curl_exec($ch);
         curl_close($ch);
 
         $this->lastResponseCode = $httpCode;
 
         if($httpCode !== 200) {
-            throw new \Exception("Response code is $httpCode");
+            throw new \Exception("Error: Response code is $httpCode");
         }
 
         return $response;
@@ -171,5 +171,30 @@ class WebarealHandler
     public function apiInfo($endPoint = 'api-info')
     {
         $ch = curl_init();
+
+        $options = [
+            CURLOPT_URL => $this->baseUrl.'/'.$endPoint,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER => false,
+            CURLOPT_HTTPHEADER => [
+                "X-Wa-api-token: $this->apiKey",
+                "Authorization: Bearer $this->bearerToken"
+            ],
+        ];
+
+        curl_setopt_array($ch,array_replace($options,$this->curlOptions));
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        curl_close($ch);
+
+        $this->lastResponseCode = $httpCode;
+
+        if($httpCode !== 200) {
+            throw new \Exception("Error: Response code is $httpCode");
+        }
+
+        return $response;
     }
 }
