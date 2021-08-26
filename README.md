@@ -39,10 +39,10 @@ Token bearer for requests is retrieved in login request
 TODO
 -----
 
-- [ ] Login request
-- [ ] Test request
-- [ ] Api info
-- [ ] Get customers
+- [x] Login request
+- [x] Test request
+- [x] Api info
+- [x] Get customers
 - [ ] Get products
 - [ ] Create product
 - [ ] Get product info
