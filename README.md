@@ -32,6 +32,12 @@ You need _username_, _password_ and _token (API key)_ from your webareal eshop
 API key is located in tab **API**
 
 Token bearer for requests is retrieved in login request
+
+
+``
+All classes extend from \matejch\webarealApiHandler\WebarealHandler
+``
+
 ```php
 /** create handler, constructor requires username, password, adn token */
 /** all can be acquired from your webareal admin interface */
@@ -48,6 +54,11 @@ $handler->test();
  * what's your limit and whether you are blocked 
  */
 $handler->apiInfo()
+
+/** API subdomain */
+/** If you don't use subdomain set in class use this method*/
+$handler->setBaseUrl($apiSubDomainUrl);
+
 ```
 
 ### Customers
@@ -72,6 +83,15 @@ $customers->get();
 
 ```
 
+### Products
+```php
+
+```
+
+### Orders
+```php
+
+```
 TODO
 -----
 

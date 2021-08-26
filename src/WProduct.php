@@ -61,9 +61,7 @@ class WProduct extends WebarealHandler
 
     public function create(string $endPoint = 'product')
     {
-        if(empty($this->id)) {
-            throw new \Exception('ID is missing. Make sure you set id with method setId($id).');
-        }
+
     }
 
     public function update(string $endPoint = 'product')
