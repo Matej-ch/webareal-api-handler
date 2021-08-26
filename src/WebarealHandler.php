@@ -53,6 +53,13 @@ class WebarealHandler
      */
     public $lastResponseCode;
 
+    /**
+     * Query string for api, searching list of products, customers, orders
+     * @var string
+     */
+    public $query = '';
+
+
     public function __construct($username, $password, $apiKey)
     {
         $this->username = $username;
@@ -188,5 +195,33 @@ class WebarealHandler
         }
 
         return $response;
+    }
+
+    /**
+     * Available options are limit(int), offset(int), sortBy(string), sortDirection(string), name(string)
+     *
+     * format of searchBy array example:
+     * [
+     *  'limit' => 10,
+     *  'offset' => 10,
+     *  'sortBy' => 'id' //id or changedAt
+     *  'sortDirection' => 'desc', //Possible values: asc, desc
+     *  'findBy' => 'id', // id , name , productNumber
+     *  'searchedString' => 'value you are searching for'
+     * ]
+     * @param array $searchBy
+     */
+    public function searchBy(array $searchBy = []): void
+    {
+        if (isset($searchBy['findBy'])) {
+            $searchBy["findBy[{$searchBy['findBy']}]"] = $searchBy['searchedString'];
+            unset($searchBy['findBy'], $searchBy['searchedString']);
+        } else {
+            unset($searchBy['searchedString']);
+        }
+
+        if (!empty($searchBy)) {
+            $this->query = "?" . http_build_query($searchBy);
+        }
     }
 }

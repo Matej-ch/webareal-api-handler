@@ -33,6 +33,42 @@ API key is located in tab **API**
 
 Token bearer for requests is retrieved in login request
 ```php
+/** create handler, constructor requires username, password, adn token */
+/** all can be acquired from your webareal admin interface */
+$handler = new \matejch\webarealApiHandler\WebarealHandler($username,$password,$apiToken);
+
+/** login before other requests */
+$handler->login();
+
+/** this is function for testing successful login, returns message whether access was granted */
+$handler->test();
+
+/** 
+ * You can check info about how many request you have remaining, 
+ * what's your limit and whether you are blocked 
+ */
+$handler->apiInfo()
+```
+
+### Customers
+About customers endpoint [here](https://webareal.docs.apiary.io/#reference/0/working-with-registered-customers/get-all-registered-customers)
+```php
+/** Only one api endpoint exists, and that is for getting list of customers */
+$customers = new \matejch\webarealApiHandler\WCustomers($username,$password,$apiToken);
+$customers->login();
+
+$customers->asArray = true; // optional
+
+/** also query string for searching specific customers can be set*/
+$customers->searchBy(['limit' => 20,
+                      'offset' => 0,
+                      'sortBy' => 'id',
+                      'sortDirection' => 'desc',
+                      'findBy' => 'id',
+                      'searchedString' => 'search string here']);
+
+/** data can be returned as json string or array of customers */
+$customers->get();
 
 ```
 
@@ -43,9 +79,9 @@ TODO
 - [x] Test request
 - [x] Api info
 - [x] Get customers
-- [ ] Get products
+- [x] Get products
 - [ ] Create product
-- [ ] Get product info
+- [x] Get product info
 - [ ] Remove product
 - [ ] Update product
 - [ ] Create multiple products

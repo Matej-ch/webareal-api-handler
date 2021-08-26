@@ -71,7 +71,7 @@ class WCustomersTest extends TestCase
         $this->assertIsArray($this->customers->get());
     }
 
-    public function searchByCombinations()
+    public function searchByCombinations(): array
     {
         return [
             ["?limit=10&offset=10&sortBy=id&sortDirection=desc&findBy%5Bid%5D=my+search+string",[
