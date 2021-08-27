@@ -88,6 +88,32 @@ Info about product endpoints [here](https://webareal.docs.apiary.io/#reference/0
 
 ```php
 
+$products = new \matejch\webarealApiHandler\WProduct($username,$password,$apiToken);
+$products->login();
+
+$products->asArray = true; // optional
+
+/** get list of products */
+/** filter can be set with $products->searchBy(array of searchable options) */
+$products->get();
+
+/** 
+ * id of product necessary for update, delete, view can be obtained with get() method, 
+ * or through csv from your admin interface
+ */
+
+/** create new product */
+$products->create();
+
+/** update existing product, you must know id beforehand */
+$products->update($id);
+
+/** delete existing product, you must know id beforehand */
+$products->delete($id);
+
+/** detail info about one product, you must know id beforehand */
+$products->view($id);
+
 ```
 
 ### Orders
@@ -105,10 +131,10 @@ TODO
 - [x] Api info
 - [x] Get customers
 - [x] Get products
-- [ ] Create product
+- [x] Create product
 - [x] Get product info
 - [x] Remove product
-- [ ] Update product
+- [x] Update product
 - [ ] Create multiple products
 - [ ] Update multiple products
 - [ ] Create properties

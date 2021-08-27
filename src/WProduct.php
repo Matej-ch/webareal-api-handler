@@ -29,7 +29,7 @@ class WProduct extends WebarealHandler
     public function view($id)
     {
         if(empty($id)) {
-            throw new \Exception('ID is missing. Make sure you set id with method setId($id).');
+            throw new \Exception('ID is missing.');
         }
 
         return $this->commonCurl($this->endPoint . '/' . $id);
@@ -59,7 +59,7 @@ class WProduct extends WebarealHandler
     public function update($id)
     {
         if(empty($id)) {
-            throw new \Exception('ID is missing. Make sure you set id with method setId($id).');
+            throw new \Exception('ID is missing.');
         }
 
         $this->addCurlOptions([CURLOPT_CUSTOMREQUEST => "PUT"]);
@@ -76,7 +76,7 @@ class WProduct extends WebarealHandler
     public function delete($id)
     {
         if(empty($id)) {
-            throw new \Exception('ID is missing. Make sure you set id with method setId($id).');
+            throw new \Exception('ID is missing.');
         }
 
         $this->addCurlOptions([CURLOPT_CUSTOMREQUEST => "DELETE"]);
