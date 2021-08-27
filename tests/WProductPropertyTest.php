@@ -61,7 +61,6 @@ class WProductPropertyTest extends TestCase
     }
 
     /**
-     * https://webareal.docs.apiary.io returns malformed json in response, test always fails
      *
      * With real connection everything works correctly
      *

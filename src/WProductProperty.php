@@ -34,7 +34,6 @@ class WProductProperty extends WebarealHandler
         return $this->commonCurl($this->endPoint . '/' . $id);
     }
 
-
     /**
      * Update existing product property
      *

@@ -15,7 +15,7 @@ class WProduct extends WebarealHandler
      * Endpoint for list of products is different from others end points for product
      *
      * @param string $endPoint
-     * @return bool|string
+     * @return array|bool|string
      * @throws Exception
      */
     public function get(string $endPoint = 'products')
@@ -39,7 +39,7 @@ class WProduct extends WebarealHandler
     /**
      * Create new product on eshop
      *
-     * @return bool|string
+     * @return array|bool|string
      * @throws Exception
      */
     public function create()
@@ -54,7 +54,7 @@ class WProduct extends WebarealHandler
      * Update existing product on eshop
      *
      * @param int $id
-     * @return bool|string
+     * @return array|bool|string
      * @throws Exception
      */
     public function update(int $id)
