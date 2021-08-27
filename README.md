@@ -146,6 +146,30 @@ $property->delete($id);
 
 ```
 
+### Product variants
+Info product variants endpoints [here](https://webareal.docs.apiary.io/#reference/0/get-product-variants/create-product-variant)
+
+```php
+$variants = new \matejch\webarealApiHandler\WProductVariants($username,$password,$apiToken);
+$variants->login();
+
+/** get list of variants, can be search by using searchBy method */
+$variants->get();
+
+$variants->view($id);
+
+/** before calling create, setFields must set fields you want to update on property */
+$variants->setFields(['idProduct' => 9,'name' => 'Jacket']);
+$variants->create($id);
+
+/** before calling update, setFields must set fields you want to update on property */
+$variants->setFields(['idProduct' => 9,'name' => 'Jacket']);
+$variants->update($id);
+
+/** delete property */
+$variants->delete($id);
+```
+
 TODO
 -----
 
@@ -166,14 +190,14 @@ TODO
 - [x] Update property
 - [x] Remove property
 - [x] Get property list
-- [ ] Get product variants list
-- [ ] Get product variant
+- [x] Create product variant
+- [x] Get product variants list
+- [x] Get product variant
 - [ ] Create product variants
 - [ ] Update product variants
-- [ ] Get product variant list
-- [ ] Update product variant list
-- [ ] Remove product variant
-- [ ] Create property list
+- [x] Get product variant list
+- [x] Update product variant list
+- [x] Remove product variant
 - [ ] Get property values list
 - [ ] Create property values
 - [ ] Create property value
