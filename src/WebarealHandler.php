@@ -168,7 +168,7 @@ class WebarealHandler
 
     /**
      * @param string $endPoint
-     * @return bool|string
+     * @return bool|string|array
      * @throws \Exception
      */
     protected function commonCurl(string $endPoint)
@@ -194,8 +194,10 @@ class WebarealHandler
 
         $this->lastResponseCode = $httpCode;
 
-        if ($httpCode !== 200) {
-            throw new \Exception("Error: Response code is $httpCode");
+        if ($httpCode !== 200 && $httpCode !== 201) {
+            $response = json_decode($response,true);
+            $message = $response['message'] ?? '';
+            throw new \Exception("Error: Response code is $httpCode. $message");
         }
 
         if($this->asArray) {

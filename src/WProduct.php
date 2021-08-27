@@ -35,11 +35,27 @@ class WProduct extends WebarealHandler
         return $this->commonCurl($this->endPoint . '/' . $id);
     }
 
+    /**
+     * Create new product on eshop
+     *
+     * @return bool|string
+     * @throws \Exception
+     */
     public function create()
     {
         $this->addCurlOptions([CURLOPT_POST => true]);
+        $this->addCurlOptions([CURLOPT_POSTFIELDS => $this->fields]);
+
+        return $this->commonCurl($this->endPoint);
     }
 
+    /**
+     * Update existing product on eshop
+     *
+     * @param $id
+     * @return bool|string
+     * @throws \Exception
+     */
     public function update($id)
     {
         if(empty($id)) {
@@ -47,6 +63,9 @@ class WProduct extends WebarealHandler
         }
 
         $this->addCurlOptions([CURLOPT_CUSTOMREQUEST => "PUT"]);
+        $this->addCurlOptions([CURLOPT_POSTFIELDS => $this->fields]);
+
+        return $this->commonCurl($this->endPoint . '/' . $id);
     }
 
     /**
@@ -66,15 +85,17 @@ class WProduct extends WebarealHandler
     }
 
     /**
+     * Set fields as associative array
+     *
      * @param array $fields
      */
     public function setFields(array $fields): void
     {
-        $this->fields = $fields;
+        $this->fields = json_encode($fields);
     }
 
     /**
-     * Set new endPoint for work with product
+     * Set new api end point for use with product
      * In case endpoint has changed
      *
      * @param $endPoint

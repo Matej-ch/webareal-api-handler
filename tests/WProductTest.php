@@ -124,6 +124,72 @@ class WProductTest extends TestCase
         $this->assertEquals('Product was removed',$response['message']);
     }
 
+    /**
+     * @test
+     */
+    public function it_creates_product()
+    {
+        $this->products->setBaseUrl($this->url);
+
+        $this->products->login();
+
+        $this->products->setFields([
+            'name' => 'Product test',
+            'secondName' => 'Second product name',
+            'description' =>'<p>This test product cannot be bought</p>',
+            'picture' => '/relative/path/to/picture.jpg',
+            'news' => true,
+            'secondPrice' => 300,
+            'price' => 150,
+            'param1' => 'for woman',
+            'param2' => 'Yellow',
+            'param3' => 'Free shipping',
+            'visibleOnHomepage' => true,
+            'productNumber' => '999999',
+            'previewPicture' => '/relative/path/to/picture.jpg',
+            'bestselling' => false,
+            'discounted' => true,
+            'measuringUnit' => 'Kg',
+        ]);
+
+        $response = $this->products->create();
+
+        $this->assertEquals('Product was created', json_decode($response, true)['message']);
+    }
+
+    /**
+     * @test
+     */
+    public function it_updates_product()
+    {
+        $this->products->setBaseUrl($this->url);
+
+        $this->products->login();
+
+        $this->products->setFields([
+            'name' => 'Product test',
+            'secondName' => 'Second product name',
+            'description' =>'<p>This test product cannot be bought</p>',
+            'picture' => '/relative/path/to/picture.jpg',
+            'news' => true,
+            'secondPrice' => 300,
+            'price' => 150,
+            'param1' => 'for woman',
+            'param2' => 'Yellow',
+            'param3' => 'Free shipping',
+            'visibleOnHomepage' => true,
+            'productNumber' => '999999',
+            'previewPicture' => '/relative/path/to/picture.jpg',
+            'bestselling' => false,
+            'discounted' => true,
+            'measuringUnit' => 'Kg',
+        ]);
+
+        $response = $this->products->update(213);
+
+        $this->assertEquals('Product was updated', json_decode($response, true)['message']);
+    }
+
     public function searchByCombinations(): array
     {
         return [
