@@ -71,6 +71,59 @@ class WProductTest extends TestCase
         $this->assertIsArray($this->products->get());
     }
 
+    /**
+     * @test
+     */
+    public function it_returns_product_detail_info_as_json()
+    {
+        $this->products->setBaseUrl($this->url);
+
+        $this->products->login();
+
+        $result = $this->products->view(123);
+
+        $this->assertJson($result);
+
+        $this->assertArrayHasKey('id',json_decode($result,true));
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_product_detail_info_as_array()
+    {
+        $this->products->setBaseUrl($this->url);
+
+        $this->products->login();
+
+        $this->products->asArray = true;
+
+        $result = $this->products->view(123);
+
+        $this->assertIsArray($result);
+
+        $this->assertArrayHasKey('id',$result);
+
+    }
+
+    /**
+     * @test
+     */
+    public function it_deletes_product_from_eshop()
+    {
+        $this->products->setBaseUrl($this->url);
+
+        $this->products->login();
+
+        $response = $this->products->delete(123);
+
+        $response = json_decode($response,true);
+
+        $this->assertArrayHasKey('message',$response);
+
+        $this->assertEquals('Product was removed',$response['message']);
+    }
+
     public function searchByCombinations(): array
     {
         return [

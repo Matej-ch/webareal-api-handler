@@ -59,6 +59,11 @@ class WebarealHandler
      */
     public $query = '';
 
+    /**
+     * Set to true if you want to return response as array
+     * @var bool
+     */
+    public $asArray = false;
 
     public function __construct($username, $password, $apiKey)
     {
@@ -89,12 +94,12 @@ class WebarealHandler
      * @param string $endPoint
      * @throws \Exception
      */
-    public function login(string $endPoint = 'login'): void
+    public function login(string $endPoint = '/login'): void
     {
         $ch = curl_init();
 
         $options = [
-            CURLOPT_URL => $this->baseUrl . '/' . $endPoint,
+            CURLOPT_URL => $this->baseUrl . $endPoint,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_POST => true,
@@ -131,7 +136,7 @@ class WebarealHandler
      * @return bool|string
      * @throws \Exception
      */
-    public function test(string $endPoint = 'test')
+    public function test(string $endPoint = '/test')
     {
         return $this->commonCurl($endPoint);
     }
@@ -143,7 +148,7 @@ class WebarealHandler
      * @return bool|string
      * @throws \Exception
      */
-    public function apiInfo(string $endPoint = 'api-info')
+    public function apiInfo(string $endPoint = '/api-info')
     {
         return $this->commonCurl($endPoint);
     }
@@ -156,10 +161,9 @@ class WebarealHandler
         return $this->bearerToken;
     }
 
-
     public function addCurlOptions(array $options): void
     {
-        $this->curlOptions = $options;
+        $this->curlOptions = array_replace($this->curlOptions,$options);
     }
 
     /**
@@ -172,7 +176,7 @@ class WebarealHandler
         $ch = curl_init();
 
         $options = [
-            CURLOPT_URL => $this->baseUrl . '/' . $endPoint,
+            CURLOPT_URL => $this->baseUrl . $endPoint,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_HTTPHEADER => [
@@ -192,6 +196,10 @@ class WebarealHandler
 
         if ($httpCode !== 200) {
             throw new \Exception("Error: Response code is $httpCode");
+        }
+
+        if($this->asArray) {
+            $response = json_decode($response,true);
         }
 
         return $response;

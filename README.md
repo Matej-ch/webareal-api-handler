@@ -107,7 +107,7 @@ TODO
 - [x] Get products
 - [ ] Create product
 - [x] Get product info
-- [ ] Remove product
+- [x] Remove product
 - [ ] Update product
 - [ ] Create multiple products
 - [ ] Update multiple products

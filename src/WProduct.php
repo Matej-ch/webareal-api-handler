@@ -4,26 +4,12 @@ namespace matejch\webarealApiHandler;
 
 class WProduct extends WebarealHandler
 {
+    private $fields;
+
+    private $endPoint = '/product';
 
     /**
-     * ID of product you want to work with
-     *
-     * This id is given to products by webareal
-     *
-     * It can be retrieved from webareal csv for products, or from list of products from api request
-     *
-     * @var mixed
-     */
-    private $id;
-
-    /**
-     * Set to true if you want to return response as array
-     * @var bool
-     */
-    public $asArray = false;
-
-    /**
-     * Endpoint for getting list of products as json or array
+     * Endpoint for getting list of products
      *
      * @param string $endPoint
      * @return bool|string
@@ -31,10 +17,6 @@ class WProduct extends WebarealHandler
      */
     public function get(string $endPoint = 'products')
     {
-        if($this->asArray) {
-            return json_decode($this->commonCurl($endPoint . $this->query),true);
-        }
-
         return $this->commonCurl($endPoint . $this->query);
     }
 
@@ -42,47 +24,63 @@ class WProduct extends WebarealHandler
      * View data about single product on eshop
      * Requires id of product
      *
-     * @param string $endPoint
-     * @return bool|mixed|string
      * @throws \Exception
      */
-    public function view(string $endPoint = 'product')
+    public function view($id)
     {
-        if(empty($this->id)) {
+        if(empty($id)) {
             throw new \Exception('ID is missing. Make sure you set id with method setId($id).');
         }
 
-        if($this->asArray) {
-            return json_decode($this->commonCurl($endPoint . '/' . $this->id),true);
-        }
-
-        return $this->commonCurl($endPoint . '/' . $this->id);
+        return $this->commonCurl($this->endPoint . '/' . $id);
     }
 
-    public function create(string $endPoint = 'product')
+    public function create()
     {
-
+        $this->addCurlOptions([CURLOPT_POST => true]);
     }
 
-    public function update(string $endPoint = 'product')
+    public function update($id)
     {
-        if(empty($this->id)) {
+        if(empty($id)) {
             throw new \Exception('ID is missing. Make sure you set id with method setId($id).');
         }
-    }
 
-    public function delete(string $endPoint = 'product')
-    {
-        if(empty($this->id)) {
-            throw new \Exception('ID is missing. Make sure you set id with method setId($id).');
-        }
+        $this->addCurlOptions([CURLOPT_CUSTOMREQUEST => "PUT"]);
     }
 
     /**
-     * @param mixed $id
+     * Delete product from eshop with api endpoint
+     *
+     * @throws \Exception
      */
-    public function setId($id): void
+    public function delete($id)
     {
-        $this->id = $id;
+        if(empty($id)) {
+            throw new \Exception('ID is missing. Make sure you set id with method setId($id).');
+        }
+
+        $this->addCurlOptions([CURLOPT_CUSTOMREQUEST => "DELETE"]);
+
+        return $this->commonCurl($this->endPoint . '/' . $id);
+    }
+
+    /**
+     * @param array $fields
+     */
+    public function setFields(array $fields): void
+    {
+        $this->fields = $fields;
+    }
+
+    /**
+     * Set new endPoint for work with product
+     * In case endpoint has changed
+     *
+     * @param $endPoint
+     */
+    public function setEndPoint($endPoint)
+    {
+        $this->endPoint = $endPoint;
     }
 }
