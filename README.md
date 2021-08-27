@@ -103,9 +103,11 @@ $products->get();
  */
 
 /** create new product */
+$products->setFields(['name' => 'Name', ....]);
 $products->create();
 
 /** update existing product, you must know id beforehand */
+$products->setFields(['secondName' => 'Second', ....]);
 $products->update($id);
 
 /** delete existing product, you must know id beforehand */
@@ -123,6 +125,27 @@ Info about order endpoints [here](https://webareal.docs.apiary.io/#reference/0/o
 ```php
 
 ```
+
+### Product properties
+Info product properties endpoints [here](https://webareal.docs.apiary.io/#reference/0/multiple-manipulation-with-products/update-property)
+
+```php
+$property = new \matejch\webarealApiHandler\WProductProperty($username,$password,$apiToken);
+$property->login();
+
+$property->get();
+
+$property->view($id);
+
+/** before calling update, setFields must set fields you want to update on property */
+$property->setFields(['name' => 'Color']);
+$property->update($id);
+
+/** delete property */
+$property->delete($id);
+
+```
+
 TODO
 -----
 
@@ -139,10 +162,10 @@ TODO
 - [ ] Update multiple products
 - [ ] Create properties
 - [ ] Update properties
-- [ ] Get property
-- [ ] Update property
-- [ ] Remove property
-- [ ] Get property list
+- [x] Get property
+- [x] Update property
+- [x] Remove property
+- [x] Get property list
 - [ ] Get product variants list
 - [ ] Get product variant
 - [ ] Create product variants
