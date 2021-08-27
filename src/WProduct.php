@@ -2,6 +2,8 @@
 
 namespace matejch\webarealApiHandler;
 
+use Exception;
+
 class WProduct extends WebarealHandler
 {
     private $fields;
@@ -10,10 +12,11 @@ class WProduct extends WebarealHandler
 
     /**
      * Endpoint for getting list of products
+     * Endpoint for list of products is different from others end points for product
      *
      * @param string $endPoint
      * @return bool|string
-     * @throws \Exception
+     * @throws Exception
      */
     public function get(string $endPoint = 'products')
     {
@@ -24,14 +27,12 @@ class WProduct extends WebarealHandler
      * View data about single product on eshop
      * Requires id of product
      *
-     * @throws \Exception
+     * @param int $id
+     * @return array|bool|string
+     * @throws Exception
      */
-    public function view($id)
+    public function view(int $id)
     {
-        if(empty($id)) {
-            throw new \Exception('ID is missing.');
-        }
-
         return $this->commonCurl($this->endPoint . '/' . $id);
     }
 
@@ -39,7 +40,7 @@ class WProduct extends WebarealHandler
      * Create new product on eshop
      *
      * @return bool|string
-     * @throws \Exception
+     * @throws Exception
      */
     public function create()
     {
@@ -52,16 +53,12 @@ class WProduct extends WebarealHandler
     /**
      * Update existing product on eshop
      *
-     * @param $id
+     * @param int $id
      * @return bool|string
-     * @throws \Exception
+     * @throws Exception
      */
-    public function update($id)
+    public function update(int $id)
     {
-        if(empty($id)) {
-            throw new \Exception('ID is missing.');
-        }
-
         $this->addCurlOptions([CURLOPT_CUSTOMREQUEST => "PUT"]);
         $this->addCurlOptions([CURLOPT_POSTFIELDS => $this->fields]);
 
@@ -71,14 +68,10 @@ class WProduct extends WebarealHandler
     /**
      * Delete product from eshop with api endpoint
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    public function delete($id)
+    public function delete(int $id)
     {
-        if(empty($id)) {
-            throw new \Exception('ID is missing.');
-        }
-
         $this->addCurlOptions([CURLOPT_CUSTOMREQUEST => "DELETE"]);
 
         return $this->commonCurl($this->endPoint . '/' . $id);
@@ -98,9 +91,9 @@ class WProduct extends WebarealHandler
      * Set new api end point for use with product
      * In case endpoint has changed
      *
-     * @param $endPoint
+     * @param string $endPoint
      */
-    public function setEndPoint($endPoint)
+    public function setEndPoint(string $endPoint): void
     {
         $this->endPoint = $endPoint;
     }
