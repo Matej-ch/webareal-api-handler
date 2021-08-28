@@ -43,6 +43,10 @@ All classes extend from \matejch\webarealApiHandler\WebarealHandler
 /** all can be acquired from your webareal admin interface */
 $handler = new \matejch\webarealApiHandler\WebarealHandler($username,$password,$apiToken);
 
+/** New handler instance can be also created with json file, that contains username, password, apiKey and url(optional) */
+
+$handler = \matejch\webarealApiHandler\WebarealHandler::createFromFile('path_to_the_json_file');
+
 /** login before other requests */
 $handler->login();
 
