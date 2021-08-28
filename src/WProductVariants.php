@@ -4,6 +4,10 @@ namespace matejch\webarealApiHandler;
 
 use Exception;
 
+/**
+ * Product variants are products connected to other product
+ *
+ */
 class WProductVariants extends WebarealHandler
 {
     private $fields;
@@ -97,5 +101,35 @@ class WProductVariants extends WebarealHandler
     public function setEndPoint($endPoint): void
     {
         $this->endPoint = $endPoint;
+    }
+
+    /**
+     * Create multiple variants of product at once
+     *
+     * @param string $endPoint
+     * @return array|bool|string
+     * @throws Exception
+     */
+    public function createMultiple(string $endPoint = '/product-variant/mass')
+    {
+        $this->addCurlOptions([CURLOPT_POST => true]);
+        $this->addCurlOptions([CURLOPT_POSTFIELDS => $this->fields]);
+
+        return $this->commonCurl($endPoint);
+    }
+
+    /**
+     * Update multiple variants products at once
+     *
+     * @param string $endPoint
+     * @return array|bool|string
+     * @throws Exception
+     */
+    public function updateMultiple(string $endPoint = '/product-variant/mass')
+    {
+        $this->addCurlOptions([CURLOPT_CUSTOMREQUEST => "PUT"]);
+        $this->addCurlOptions([CURLOPT_POSTFIELDS => $this->fields]);
+
+        return $this->commonCurl($endPoint);
     }
 }

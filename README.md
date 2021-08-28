@@ -165,12 +165,20 @@ $property->update($id);
 
 /** delete property */
 $property->delete($id);
+
+/** create and update multiple */
+$property->setFields(['name' => 'Color']);
+$property->createMultiple();
+
+/** id for every property must be set when updating */
+$property->updateMultiple();
 ```
 
 ### Product variants
 Info product variants endpoints [here](https://webareal.docs.apiary.io/#reference/0/get-product-variants/create-product-variant)
 
 ```php
+/** Product variants are products connected to other product */
 $variants = new \matejch\webarealApiHandler\WProductVariants($username,$password,$apiToken);
 $variants->login();
 
@@ -189,6 +197,13 @@ $variants->update($id);
 
 /** delete property */
 $variants->delete($id);
+
+/** create and update multiple */
+$variants->setFields(['name' => 'Color']);
+$variants->createMultiple();
+
+/** id for every variant must be set when updating */
+$variants->updateMultiple();
 ```
 
 TODO
@@ -214,8 +229,8 @@ TODO
 - [x] Create product variant
 - [x] Get product variants list
 - [x] Get product variant
-- [ ] Create product variants
-- [ ] Update product variants
+- [x] Create product variants
+- [x] Update product variants
 - [x] Get product variant list
 - [x] Update product variant list
 - [x] Remove product variant
