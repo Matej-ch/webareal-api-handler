@@ -7,19 +7,17 @@ use PHPUnit\Framework\TestCase;
 
 class WProductTest extends TestCase
 {
-    private $url ='https://private-anon-e78cd6001a-webareal.apiary-mock.com';
-
-    private $userName = 'test@mail.a';
-
-    private $password = 'test12345';
-
-    private $apiKey = '2asdfaf16edab97f379133231w12f';
+    private $url;
 
     private $products;
 
     public function setUp(): void
     {
-        $this->products = new WProduct($this->userName,$this->password,$this->apiKey);
+        $auth = file_get_contents('stubs/auth.json');
+        $auth = json_decode($auth,true);
+        $this->url = $auth['url'];
+
+        $this->products = new WProduct($auth['username'],$auth['password'],$auth['apiKey']);
 
         /** in case dev doesn't have certificate */
         $this->products->addCurlOptions([

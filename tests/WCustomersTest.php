@@ -7,19 +7,18 @@ use PHPUnit\Framework\TestCase;
 
 class WCustomersTest extends TestCase
 {
-    private $url ='https://private-anon-e78cd6001a-webareal.apiary-mock.com';
+    private $url;
 
-    private $userName = 'test@mail.a';
-
-    private $password = 'test12345';
-
-    private $apiKey = '2asdfaf16edab97f379133231w12f';
 
     private $customers;
 
     public function setUp(): void
     {
-        $this->customers = new WCustomers($this->userName,$this->password,$this->apiKey);
+        $auth = file_get_contents('stubs/auth.json');
+        $auth = json_decode($auth,true);
+        $this->url = $auth['url'];
+
+        $this->customers = new WCustomers($auth['username'],$auth['password'],$auth['apiKey']);
 
         /** in case dev doesn't have certificate */
         $this->customers->addCurlOptions([

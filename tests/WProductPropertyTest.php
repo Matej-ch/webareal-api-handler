@@ -8,19 +8,17 @@ use PHPUnit\Framework\TestCase;
 class WProductPropertyTest extends TestCase
 {
 
-    private $url ='https://private-anon-e78cd6001a-webareal.apiary-mock.com';
-
-    private $userName = 'test@mail.a';
-
-    private $password = 'test12345';
-
-    private $apiKey = '2asdfaf16edab97f379133231w12f';
+    private $url;
 
     private $properties;
 
     public function setUp(): void
     {
-        $this->properties = new WProductProperty($this->userName,$this->password,$this->apiKey);
+        $auth = file_get_contents('stubs/auth.json');
+        $auth = json_decode($auth,true);
+        $this->url = $auth['url'];
+
+        $this->properties = new WProductProperty($auth['username'],$auth['password'],$auth['apiKey']);
 
         /** in case dev doesn't have certificate */
         $this->properties->addCurlOptions([
