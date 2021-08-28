@@ -73,6 +73,41 @@ class WebarealHandler
     }
 
     /**
+     * Create new instance of handler from file, must be json and contain at least username, password and apiKey
+     * url js optional
+     *
+     * @param $filePath
+     * @return WebarealHandler
+     * @throws \Exception
+     */
+    public static function createFromFile($filePath): WebarealHandler
+    {
+        $content = @file_get_contents($filePath);
+
+        if(!$content) {
+            throw new \Exception('Auth file error');
+        }
+
+        $content = json_decode($content,true);
+
+        $requiredFields = ['username','password','apiKey'];
+
+        $keys = array_keys($content);
+        foreach ($requiredFields as $requiredField) {
+            if(!in_array($requiredField, $keys, true)) {
+                throw new \Exception("Missing field $requiredField");
+            }
+        }
+
+        $instance = new self($content['username'],$content['password'],$content['apiKey']);
+        if(isset($content['url'])) {
+            $instance->setBaseUrl($content['url']);
+        }
+
+        return $instance;
+    }
+
+    /**
      * @param string $baseUrl
      */
     public function setBaseUrl(string $baseUrl): void
