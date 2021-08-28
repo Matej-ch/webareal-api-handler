@@ -117,6 +117,15 @@ $products->delete($id);
 
 /** detail info about one product, you must know id beforehand */
 $products->view($id);
+
+/** update and create multiple products at once */
+
+$products->setFields(['name' => 'product', ....]);
+
+$products->createMultiple();
+
+/** to update multiple product id is required for every product */
+$products->updateMultiple();
 ```
 
 ### Orders
@@ -194,8 +203,8 @@ TODO
 - [x] Get product info
 - [x] Remove product
 - [x] Update product
-- [ ] Create multiple products
-- [ ] Update multiple products
+- [x] Create multiple products
+- [x] Update multiple products
 - [ ] Create properties
 - [ ] Update properties
 - [x] Get property

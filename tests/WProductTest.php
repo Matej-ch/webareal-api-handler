@@ -208,4 +208,101 @@ class WProductTest extends TestCase
             ['',[]]
         ];
     }
+
+    /**
+     * @test
+     */
+    public function it_creates_multiple_products()
+    {
+        $this->products->setBaseUrl($this->url);
+
+        $this->products->login();
+
+        $this->products->setFields([
+            [
+                'name' => 'Product test 1',
+                'secondName' => 'Second product name 1',
+                'description' =>'<p>This test product cannot be bought</p>',
+                'picture' => '/relative/path/to/picture.jpg',
+                'news' => true,
+                'secondPrice' => 300,
+                'price' => 150,
+                'param1' => 'for woman',
+                'param2' => 'Yellow',
+                'param3' => 'Free shipping',
+                'visibleOnHomepage' => true,
+                'productNumber' => '999999',
+                'previewPicture' => '/relative/path/to/picture.jpg',
+                'bestselling' => false,
+                'discounted' => true,
+                'measuringUnit' => 'Kg',
+            ],
+            [
+                'name' => 'Product test 2',
+                'secondName' => 'Second product name 2',
+                'description' =>'<p>This test product cannot be bought now</p>',
+                'picture' => '/relative/path/to/picture.jpg',
+                'news' => true,
+                'secondPrice' => 6666,
+                'price' => 65420,
+                'param1' => 'for woman',
+                'param2' => 'Yellow',
+                'param3' => 'Free shipping',
+                'visibleOnHomepage' => true,
+                'productNumber' => '999999',
+                'previewPicture' => '/relative/path/to/picture.jpg',
+                'bestselling' => false,
+                'discounted' => true,
+                'measuringUnit' => 'Kg',
+            ]
+        ]);
+        $response = $this->products->createMultiple();
+
+        $this->assertEquals('Products were created', json_decode($response, true)['message']);
+    }
+
+    /**
+     * @test
+     */
+    public function it_updates_multiple_products()
+    {
+        $this->products->setBaseUrl($this->url);
+
+        $this->products->login();
+
+        $this->products->setFields([
+            [
+                'id' => 426184,
+                'name' => 'Product test 1',
+                'secondName' => 'Second product name 1 update',
+                'secondPrice' => 300,
+                'price' => 150,
+                'param1' => 'for woman',
+                'param2' => 'Yellow',
+                'param3' => 'Free shipping',
+                'visibleOnHomepage' => false,
+                'productNumber' => '999999',
+                'bestselling' => false,
+                'discounted' => false,
+            ],
+            [
+                'id' => 426185,
+                'name' => 'Product test 2',
+                'secondName' => 'Second product name 2 update',
+                'description' =>'<p>update description test</p>',
+                'news' => false,
+                'param1' => 'for man',
+                'param2' => 'Yellow',
+                'param3' => 'Free shipping',
+                'visibleOnHomepage' => false,
+                'productNumber' => '9999399',
+                'bestselling' => false,
+                'discounted' => false,
+            ]
+        ]);
+
+        $response = $this->products->updateMultiple();
+
+        $this->assertEquals('Products were updated', json_decode($response, true)['message']);
+    }
 }
