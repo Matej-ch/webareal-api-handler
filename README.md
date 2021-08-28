@@ -159,6 +159,9 @@ $property->get();
 
 $property->view($id);
 
+$property->setFields(['name' => 'Color']);
+$property->create($id);
+
 /** before calling update, setFields must set fields you want to update on property */
 $property->setFields(['name' => 'Color']);
 $property->update($id);
@@ -234,12 +237,12 @@ TODO
 - [x] Get product variant list
 - [x] Update product variant list
 - [x] Remove product variant
-- [ ] Get property values list
-- [ ] Create property values
-- [ ] Create property value
-- [ ] Get property value info
-- [ ] Remove specific property value
-- [ ] Update specific property value
+- [x] Get property values list
+- [x] Create property values
+- [x] Create property value
+- [x] Get property value info
+- [x] Remove specific property value
+- [x] Update specific property value
 - [x] Get order list
 - [ ] Update orders
 - [x] Get order info

@@ -4,26 +4,26 @@ namespace matejch\webarealApiHandler;
 
 use Exception;
 
-class WProductProperty extends WebarealHandler
+class WPropertyValue extends WebarealHandler
 {
     private $fields;
 
-    private $endPoint = '/product-properties';
+    private $endPoint = '/product-property-values';
 
     /**
-     * Get list of existing properties, filter with query
+     * Get list of property values
      *
      * @param string $endPoint
      * @return array|bool|string
      * @throws Exception
      */
-    public function get(string $endPoint = '/product-properties')
+    public function get(string $endPoint = '/product-property-values')
     {
         return $this->commonCurl($endPoint . $this->query);
     }
 
     /**
-     * Create one product property
+     * Create property value
      *
      * @return array|bool|string
      * @throws Exception
@@ -37,19 +37,7 @@ class WProductProperty extends WebarealHandler
     }
 
     /**
-     * View detail data about single product property
-     *
-     * @param int $id
-     * @return array|bool|string
-     * @throws Exception
-     */
-    public function view(int $id)
-    {
-        return $this->commonCurl($this->endPoint . '/' . $id);
-    }
-
-    /**
-     * Update existing product property
+     * Update property value
      *
      * @param int $id
      * @return array|bool|string
@@ -64,7 +52,19 @@ class WProductProperty extends WebarealHandler
     }
 
     /**
-     * Delete product property
+     * Show detail of property value
+     *
+     * @param int $id
+     * @return array|bool|string
+     * @throws Exception
+     */
+    public function view(int $id)
+    {
+        return $this->commonCurl($this->endPoint . '/' . $id);
+    }
+
+    /**
+     * Delete one property value
      *
      * @param int $id
      * @return array|bool|string
@@ -76,7 +76,7 @@ class WProductProperty extends WebarealHandler
 
         return $this->commonCurl($this->endPoint . '/' . $id);
     }
-
+    
     /**
      * Set fields as associative array
      *
@@ -88,7 +88,7 @@ class WProductProperty extends WebarealHandler
     }
 
     /**
-     * Set new api end point for use with product property
+     * Set new api end point for use with product variant
      * In case endpoint has changed
      *
      * @param string $endPoint
@@ -99,33 +99,17 @@ class WProductProperty extends WebarealHandler
     }
 
     /**
-     * Create multiple products properties at once
+     * Create multiple property values at once
      *
      * @param string $endPoint
      * @return array|bool|string
      * @throws Exception
      */
-    public function createMultiple(string $endPoint = '/product-property/mass')
+    public function createMultiple(string $endPoint = '/product-properties-values/mass')
     {
         $this->addCurlOptions([CURLOPT_POST => true]);
         $this->addCurlOptions([CURLOPT_POSTFIELDS => $this->fields]);
 
         return $this->commonCurl($endPoint);
     }
-
-    /**
-     * Update multiple product properties at once
-     *
-     * @param string $endPoint
-     * @return array|bool|string
-     * @throws Exception
-     */
-    public function updateMultiple(string $endPoint = '/product-property/mass')
-    {
-        $this->addCurlOptions([CURLOPT_CUSTOMREQUEST => "PUT"]);
-        $this->addCurlOptions([CURLOPT_POSTFIELDS => $this->fields]);
-
-        return $this->commonCurl($endPoint);
-    }
-
 }
