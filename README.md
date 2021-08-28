@@ -58,7 +58,6 @@ $handler->apiInfo()
 /** API subdomain */
 /** If you don't use subdomain set in class use this method*/
 $handler->setBaseUrl($apiSubDomainUrl);
-
 ```
 
 ### Customers
@@ -80,7 +79,6 @@ $customers->searchBy(['limit' => 20,
 
 /** data can be returned as json string or array of customers */
 $customers->get();
-
 ```
 
 ### Products
@@ -115,7 +113,6 @@ $products->delete($id);
 
 /** detail info about one product, you must know id beforehand */
 $products->view($id);
-
 ```
 
 ### Orders
@@ -123,7 +120,19 @@ $products->view($id);
 Info about order endpoints [here](https://webareal.docs.apiary.io/#reference/0/order-list)
 
 ```php
+$orders = new \matejch\webarealApiHandler\WOrder($username,$password,$apiToken);
+$orders->login();
 
+$orders->get();
+
+$orders->states();
+
+$orders->view($id);
+
+$products->setFields(['firstname' => 'Jane', 'lastname' => 'Doe',...]);
+$orders->update($id);
+
+$orders->delete($id)
 ```
 
 ### Product properties
@@ -143,7 +152,6 @@ $property->update($id);
 
 /** delete property */
 $property->delete($id);
-
 ```
 
 ### Product variants
@@ -204,12 +212,12 @@ TODO
 - [ ] Get property value info
 - [ ] Remove specific property value
 - [ ] Update specific property value
-- [ ] Get order list
+- [x] Get order list
 - [ ] Update orders
-- [ ] Get order info
-- [ ] Update order
-- [ ] Remove order
-- [ ] Get all order states
+- [x] Get order info
+- [x] Update order
+- [x] Remove order
+- [x] Get all order states
 - [ ] Update order products
 - [ ] Update order product
 - [ ] Remove order product
