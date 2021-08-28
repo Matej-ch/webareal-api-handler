@@ -84,4 +84,34 @@ class WProductProperty extends WebarealHandler
         $this->endPoint = $endPoint;
     }
 
+    /**
+     * Create multiple products properties at once
+     *
+     * @param string $endPoint
+     * @return array|bool|string
+     * @throws Exception
+     */
+    public function createMultiple(string $endPoint = '/product-property/mass')
+    {
+        $this->addCurlOptions([CURLOPT_POST => true]);
+        $this->addCurlOptions([CURLOPT_POSTFIELDS => $this->fields]);
+
+        return $this->commonCurl($endPoint);
+    }
+
+    /**
+     * Update multiple product properties at once
+     *
+     * @param string $endPoint
+     * @return array|bool|string
+     * @throws Exception
+     */
+    public function updateMultiple(string $endPoint = '/product-property/mass')
+    {
+        $this->addCurlOptions([CURLOPT_CUSTOMREQUEST => "PUT"]);
+        $this->addCurlOptions([CURLOPT_POSTFIELDS => $this->fields]);
+
+        return $this->commonCurl($endPoint);
+    }
+
 }

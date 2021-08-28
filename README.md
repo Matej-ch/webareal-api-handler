@@ -205,8 +205,8 @@ TODO
 - [x] Update product
 - [x] Create multiple products
 - [x] Update multiple products
-- [ ] Create properties
-- [ ] Update properties
+- [x] Create properties
+- [x] Update properties
 - [x] Get property
 - [x] Update property
 - [x] Remove property
