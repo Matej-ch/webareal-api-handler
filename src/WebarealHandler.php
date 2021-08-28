@@ -214,9 +214,9 @@ class WebarealHandler
      * [
      *  'limit' => 10,
      *  'offset' => 10,
-     *  'sortBy' => 'id' //id or changedAt
+     *  'sortBy' => 'id' // different options exists
      *  'sortDirection' => 'desc', //Possible values: asc, desc
-     *  'findBy' => 'id', // id , name , productNumber
+     *  'findBy' => 'id', //different options exists for different types of documents
      *  'searchedString' => 'value you are searching for'
      * ]
      * @param array $searchBy
