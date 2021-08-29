@@ -65,4 +65,14 @@ class WOrderProduct extends WebarealHandler
     {
         $this->endPoint = $endPoint;
     }
+
+    /**
+     * Set fields as associative array
+     *
+     * @param array $fields
+     */
+    public function setFields(array $fields): void
+    {
+        $this->fields = json_encode($fields);
+    }
 }
