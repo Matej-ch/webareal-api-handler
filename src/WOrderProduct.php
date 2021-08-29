@@ -4,8 +4,6 @@ namespace matejch\webarealApiHandler;
 
 class WOrderProduct extends WebarealHandler
 {
-    private $fields;
-
     private $endPoint = '/order';
 
     /**
@@ -64,15 +62,5 @@ class WOrderProduct extends WebarealHandler
     public function setEndPoint(string $endPoint): void
     {
         $this->endPoint = $endPoint;
-    }
-
-    /**
-     * Set fields as associative array
-     *
-     * @param array $fields
-     */
-    public function setFields(array $fields): void
-    {
-        $this->fields = json_encode($fields);
     }
 }

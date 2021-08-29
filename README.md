@@ -209,7 +209,7 @@ $variants->createMultiple();
 $variants->updateMultiple();
 ```
 
-TODO
+DONE
 -----
 
 - [x] Login request
@@ -244,11 +244,14 @@ TODO
 - [x] Remove specific property value
 - [x] Update specific property value
 - [x] Get order list
-- [ ] Update orders
+- [x] Update orders
 - [x] Get order info
 - [x] Update order
 - [x] Remove order
 - [x] Get all order states
-- [ ] Update order products
-- [ ] Update order product
-- [ ] Remove order product
+- [x] Update order products
+- [x] Update order product
+- [x] Remove order product
+
+TODO
+-----

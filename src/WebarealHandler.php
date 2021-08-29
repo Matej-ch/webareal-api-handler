@@ -65,6 +65,11 @@ class WebarealHandler
      */
     public $asArray = false;
 
+    /**
+     * @var string
+     */
+    protected $fields;
+
     public function __construct($username, $password, $apiKey)
     {
         $this->username = $username;
@@ -196,12 +201,19 @@ class WebarealHandler
         return $this->bearerToken;
     }
 
+    /**
+     * Add your own curl options
+     *
+     * @param array $options
+     */
     public function addCurlOptions(array $options): void
     {
         $this->curlOptions = array_replace($this->curlOptions,$options);
     }
 
     /**
+     * Request to specified API endPoint
+     *
      * @param string $endPoint
      * @return bool|string|array
      * @throws \Exception
@@ -244,6 +256,7 @@ class WebarealHandler
 
     /**
      * Available options are limit(int), offset(int), sortBy(string), sortDirection(string), name(string)
+     * Use findBy to specify which attribute to search, and searchString is what you want to find
      *
      * format of searchBy array example:
      * [
@@ -268,5 +281,15 @@ class WebarealHandler
         if (!empty($searchBy)) {
             $this->query = "?" . http_build_query($searchBy);
         }
+    }
+
+    /**
+     * Set fields as associative array
+     *
+     * @param array $fields
+     */
+    public function setFields(array $fields): void
+    {
+        $this->fields = json_encode($fields);
     }
 }
