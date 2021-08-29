@@ -12,13 +12,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist matejch/webareal-api-handler "*"
+php composer.phar require --prefer-dist matejch/webareal-api-handler "^1.0"
 ```
 
 or add
 
 ```
-"matejch/webareal-api-handler": "*"
+"matejch/webareal-api-handler": "^1.0"
 ```
 
 to the require section of your `composer.json` file.
