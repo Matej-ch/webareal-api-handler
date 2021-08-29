@@ -96,4 +96,22 @@ class WOrder extends WebarealHandler
     {
         $this->endPoint = $endPoint;
     }
+
+    /**
+     * Update multiple orders at once
+     *
+     * Set fields to update whit method setFields() and attribute fields is multidimensional array
+     * Every subarray is data for one order
+     *
+     * @param string $endPoint
+     * @return array|bool|string
+     * @throws Exception
+     */
+    public function updateMultiple(string $endPoint = '/orders/mass')
+    {
+        $this->addCurlOptions([CURLOPT_CUSTOMREQUEST => "PUT"]);
+        $this->addCurlOptions([CURLOPT_POSTFIELDS => $this->fields]);
+
+        return $this->commonCurl($endPoint);
+    }
 }
