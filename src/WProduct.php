@@ -16,7 +16,7 @@ class WProduct extends WebarealHandler
      * @return array|bool|string
      * @throws Exception
      */
-    public function get(string $endPoint = 'products')
+    public function get(string $endPoint = '/products')
     {
         return $this->commonCurl($endPoint . $this->query);
     }
