@@ -286,10 +286,11 @@ class WebarealHandler
     /**
      * Set fields as associative array
      *
-     * @param array $fields
+     * @param mixed $fields
+     * @param bool $jsonify whether to convert fields to json
      */
-    public function setFields(array $fields): void
+    public function setFields($fields,bool $jsonify = true): void
     {
-        $this->fields = json_encode($fields);
+        $this->fields = $jsonify ? json_encode($fields) : $fields;
     }
 }
