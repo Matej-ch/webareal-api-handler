@@ -2,6 +2,7 @@
     "name": "matejch/webareal-api-handler",
     "description": "Api for getting and sending data to webareal type eshops",
     "type": "library",
+    "version": "1.1.0",
     "keywords": ["webareal","api","request","eshop"],
     "license": "MIT",
     "authors": [

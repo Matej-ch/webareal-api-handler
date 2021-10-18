@@ -305,4 +305,45 @@ class WProductTest extends TestCase
 
         $this->assertEquals('Products were updated', json_decode($response, true)['message']);
     }
+
+    /**
+     * @test
+     */
+    public function it_creates_string_for_massUpdate()
+    {
+        $this->products->setFieldsAsString([]);
+
+        $this->assertEquals("[]",$this->products->getFields());
+
+        $this->products->setFieldsAsString([[
+            'id' => 123456,
+            'price' => 86.71,
+            'news' => 0,
+            'visibleOnHomepage' => 0,
+            'discounted'  => false,
+            'bestselling' => 0,
+            'bazaarEnabled' => 0,
+            'hidden' => 0,
+            ], [
+            'id' => 99999,
+            'price' => 37,
+            'news' => 0,
+            'visibleOnHomepage' => 0,
+            'discounted' => false,
+            'bestselling' => 0,
+            'bazaarEnabled' => 0,
+            'hidden' => 0,
+            ], [
+            'id' =>  6989,
+            'price'=> 10.37,
+            'news' => 0,
+            'visibleOnHomepage' => 0,
+            'discounted' =>  false,
+            'bestselling' => 0,
+            'bazaarEnabled' => 0,
+            'hidden' => 0,
+            ]]);
+
+        $this->assertEquals('[{"id":123456,"price":86.71,"news":false,"visibleOnHomepage":false,"discounted":false,"bestselling":false,"bazaarEnabled":false,"hidden":false},{"id":99999,"price":37,"news":false,"visibleOnHomepage":false,"discounted":false,"bestselling":false,"bazaarEnabled":false,"hidden":false},{"id":6989,"price":10.37,"news":false,"visibleOnHomepage":false,"discounted":false,"bestselling":false,"bazaarEnabled":false,"hidden":false}]',$this->products->getFields());
+    }
 }

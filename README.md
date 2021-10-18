@@ -88,6 +88,16 @@ $customers->get();
 ### Products
 Info about product endpoints [here](https://webareal.docs.apiary.io/#reference/0/create-product/get-product-list)
 
+#### NEW METHOD for mass product update
+
+```php 
+
+/**For mass update use */ 
+
+function setFieldsAsString(array_of_products)
+
+```
+
 ```php
 
 $products = new \matejch\webarealApiHandler\WProduct($username,$password,$apiToken);

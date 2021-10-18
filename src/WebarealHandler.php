@@ -129,6 +129,14 @@ class WebarealHandler
     }
 
     /**
+     * @return string
+     */
+    public function getFields(): string
+    {
+        return $this->fields;
+    }
+
+    /**
      * Login into api
      *
      * @param string $endPoint

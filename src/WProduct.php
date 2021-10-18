@@ -115,4 +115,60 @@ class WProduct extends WebarealHandler
 
         return $this->commonCurl($endPoint);
     }
+
+    public function booleanAttributes(): array
+    {
+        return [
+            'news',
+            'visibleOnHomepage',
+            'bestselling',
+            'discounted',
+            'discussionEnabled',
+            'freeShippingEnabled',
+            'bazaarEnabled',
+            'unsaleable',
+            'hidden',
+            'facebookEnabled',
+            'zboziczUnfeatured',
+            'zboziczFirmycz'
+
+        ];
+    }
+
+    /**
+     * New better function to prepare data, when updating multiple products at once
+     *
+     * Parameter $products is array of products where keys should be names of updatable attributes allowed in webareal api
+     *
+     * @param array $products
+     */
+    public function setFieldsAsString(array $products): void
+    {
+        $productsStrings = [];
+        foreach ($products as $product) {
+            $productRow = '{';
+            $i = 1;
+            $count = count($product);
+            foreach ($product as $attrName => $attrValue) {
+                $val = $attrValue;
+                if (in_array($attrName, $this->booleanAttributes(), true)) {
+                    $val = $attrValue ? 'true' : 'false';
+                }
+
+                if ($count === $i) {
+                    $productRow .= "\"$attrName\":$val";
+                } else {
+                    $productRow .= "\"$attrName\":$val,";
+                }
+                $i++;
+            }
+
+            $productRow .= '}';
+            $productsStrings[] = $productRow;
+        }
+
+        $productsStrings = implode(",", $productsStrings);
+
+        $this->fields = "[" . $productsStrings . "]";
+    }
 }
